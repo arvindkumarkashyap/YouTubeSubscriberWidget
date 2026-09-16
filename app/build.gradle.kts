@@ -14,7 +14,16 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "YOUTUBE_API_KEY", "\"${project.findProperty("YOUTUBE_API_KEY") ?: ""}\"")
+        val youtubeApiKey =
+    System.getenv("YOUTUBE_API_KEY")
+        ?: project.findProperty("YOUTUBE_API_KEY")?.toString()
+        ?: ""
+
+buildConfigField(
+    "String",
+    "YOUTUBE_API_KEY",
+    "\"$youtubeApiKey\""
+)
     }
     buildFeatures { compose = true; buildConfig = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
